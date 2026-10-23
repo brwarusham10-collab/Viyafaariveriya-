@@ -1,0 +1,170 @@
+@import "tailwindcss";
+@import "@fontsource-variable/figtree";
+@import "@fontsource-variable/bricolage-grotesque";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Viyafaariveriyaa tokens.
+   Reef ink (sidebar, totals) · Lagoon (primary action) · Dhoni saffron (attention) · Coral (destructive) */
+:root {
+  --reef: #0d2b33;
+  --reef-2: #133a44;
+  --reef-text: #c6d5d7;
+  --lagoon: #0e8c7f;
+  --lagoon-strong: #0a7368;
+  --lagoon-soft: #e1f2ef;
+  --saffron: #e9a23b;
+  --saffron-soft: #fcf1df;
+  --coral: #d9534a;
+  --coral-soft: #fbe7e5;
+  --ok: #2f8a4e;
+  --ok-soft: #e3f3e8;
+
+  --bg: #f4f6f5;
+  --surface: #ffffff;
+  --surface-2: #f9fbfa;
+  --fg: #1b2a2f;
+  --muted: #5b6c71;
+  --subtle: #8a999d;
+  --line: #dde4e3;
+  --line-strong: #c8d2d1;
+  --ring: #0e8c7f;
+  --chart: #00927f;
+}
+
+.dark {
+  --reef: #0a1f25;
+  --reef-2: #12313a;
+  --reef-text: #b6c8cb;
+  --lagoon: #19a896;
+  --lagoon-strong: #2cc0ad;
+  --lagoon-soft: #123d3a;
+  --saffron: #f0b04f;
+  --saffron-soft: #3a2f1c;
+  --coral: #ec6c62;
+  --coral-soft: #3d2221;
+  --ok: #4cb36d;
+  --ok-soft: #173826;
+
+  --bg: #0f2329;
+  --surface: #15303a;
+  --surface-2: #183641;
+  --fg: #e6eeef;
+  --muted: #9fb3b7;
+  --subtle: #7b9196;
+  --line: #24444e;
+  --line-strong: #2f5561;
+  --ring: #2cc0ad;
+  --chart: #19a896;
+}
+
+@theme inline {
+  --font-sans: "Figtree Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque Variable", "Figtree Variable", ui-sans-serif, sans-serif;
+
+  --color-reef: var(--reef);
+  --color-reef-2: var(--reef-2);
+  --color-reef-text: var(--reef-text);
+  --color-lagoon: var(--lagoon);
+  --color-lagoon-strong: var(--lagoon-strong);
+  --color-lagoon-soft: var(--lagoon-soft);
+  --color-saffron: var(--saffron);
+  --color-saffron-soft: var(--saffron-soft);
+  --color-coral: var(--coral);
+  --color-coral-soft: var(--coral-soft);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-ring: var(--ring);
+  --color-chart: var(--chart);
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: var(--lagoon-soft);
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+@keyframes skeleton {
+  0% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.55;
+  }
+}
+
+/* Thermal / A4 printing */
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+  .print-area,
+  .print-area * {
+    visibility: visible !important;
+  }
+  .print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    color: #000 !important;
+    background: #fff !important;
+  }
+}

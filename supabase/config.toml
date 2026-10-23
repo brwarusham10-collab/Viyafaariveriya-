@@ -1,0 +1,24 @@
+# Minimal Supabase CLI config. `npx supabase start` (Docker) applies supabase/migrations.
+# The demo seed uses psql meta-commands, so load it with psql instead (see README).
+project_id = "viyafaariveriyaa"
+
+[api]
+schemas = ["public"]
+extra_search_path = ["public"]
+
+[db]
+major_version = 15
+
+[db.seed]
+enabled = false
+
+[auth]
+site_url = "http://localhost:5173"
+additional_redirect_urls = ["http://localhost:5173/reset-password", "http://localhost:5173/onboarding"]
+
+[auth.email]
+enable_signup = true
+enable_confirmations = false
+
+[storage]
+file_size_limit = "5MiB"
