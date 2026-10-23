@@ -11,6 +11,7 @@ import { Badge, Card, CardHeader, EmptyState, PageHeader } from "@/components/ui
 import { Table, TableSkeleton, Td, Th, THead, Tr } from "@/components/ui/table";
 import { fmtDate, fmtDateTime } from "@/lib/dates";
 import { rpc, supabase, toAppError, unwrap } from "@/lib/supabase";
+import { appUrl } from "@/lib/utils";
 
 interface Member { id: string; user_id: string; email: string; display_name: string | null; role_id: string; role_name: string; outlet_ids: string[] | null; status: string; created_at: string; last_sign_in_at: string | null }
 interface Role { id: string; name: string; description: string | null; system_key: string | null; permissions: string[] }
@@ -78,7 +79,7 @@ export default function StaffPage() {
             {invites.data.map((i) => (
               <li key={i.id} className="flex flex-wrap items-center gap-3 px-4 py-2.5 text-sm">
                 <span className="flex-1">{i.email} <span className="text-muted">· {i.roles.name} · expires {fmtDate(i.expires_at)}</span></span>
-                <Button size="sm" variant="ghost" onClick={() => { navigator.clipboard.writeText(`${location.origin}/login`); toast.success("Sign-up link copied"); }}><Copy /> Copy sign-up link</Button>
+                <Button size="sm" variant="ghost" onClick={() => { navigator.clipboard.writeText(appUrl("login")); toast.success("Sign-up link copied"); }}><Copy /> Copy sign-up link</Button>
                 <Button size="sm" variant="danger-ghost" onClick={async () => {
                   const { error } = await supabase.from("invitations").update({ status: "revoked" }).eq("id", i.id);
                   if (error) return toast.error(toAppError(error).message);

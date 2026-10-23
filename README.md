@@ -61,7 +61,17 @@ shifts (one with a variance), pending bank transfers, expenses and an in-progres
 
 The `org-files` storage bucket and its policies are created by migration `…0800_storage.sql`.
 
-### 2. Vercel
+### 2a. GitHub Pages (no extra account)
+`.github/workflows/deploy-pages.yml` builds and publishes on every push to `main`, at
+`https://<owner>.github.io/<repo>/`.
+1. Repo **Settings → Pages → Build and deployment → Source: GitHub Actions** (one-time).
+2. Put the project URL and anon key in `.env.production` (they are public by design), or set
+   repository variables `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY` under Settings → Secrets and
+   variables → Actions → Variables.
+3. In Supabase Auth → URL configuration use `https://<owner>.github.io/<repo>/` as the Site URL and add
+   `…/<repo>/reset-password` and `…/<repo>/onboarding` as redirect URLs.
+
+### 2b. Vercel
 1. Import the repository; framework preset **Vite** (`vercel.json` sets SPA rewrites, security
    headers and caching).
 2. Environment variables: `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` (the anon/publishable key).

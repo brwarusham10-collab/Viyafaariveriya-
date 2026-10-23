@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Field, Input } from "@/components/ui/input";
 import { describeError } from "@/lib/errors";
 import { supabase } from "@/lib/supabase";
-import { cn } from "@/lib/utils";
+import { appUrl, cn } from "@/lib/utils";
 
 const schema = z.object({
   email: z.string().trim().email("Enter a valid email address"),
@@ -78,12 +78,12 @@ export function LoginPage() {
         if (error) throw error;
         navigate("/");
       } else if (mode === "signup") {
-        const { data, error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: `${window.location.origin}/onboarding` } });
+        const { data, error } = await supabase.auth.signUp({ email, password, options: { emailRedirectTo: appUrl("onboarding") } });
         if (error) throw error;
         if (data.session) navigate("/onboarding");
         else toast.success("Check your inbox to confirm your email, then sign in.");
       } else {
-        const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/reset-password` });
+        const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: appUrl("reset-password") });
         if (error) throw error;
         toast.success("If that email has an account, a reset link is on its way.");
         setMode("signin");

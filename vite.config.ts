@@ -4,7 +4,11 @@ import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vitest/config";
 import { VitePWA } from "vite-plugin-pwa";
 
+// "/" on Vercel; "/<repo>/" on GitHub Pages (set by the deploy workflow).
+const base = process.env.VITE_BASE ?? "/";
+
 export default defineConfig({
+  base,
   plugins: [
     react(),
     tailwindcss(),
@@ -18,7 +22,8 @@ export default defineConfig({
         theme_color: "#0D2B33",
         background_color: "#F4F6F5",
         display: "standalone",
-        start_url: "/pos",
+        start_url: `${base}pos`,
+        scope: base,
         icons: [
           { src: "pwa-192.png", sizes: "192x192", type: "image/png" },
           { src: "pwa-512.png", sizes: "512x512", type: "image/png" },
@@ -29,7 +34,7 @@ export default defineConfig({
         // App shell only. API responses are never cached by the service worker; offline
         // catalog data lives in IndexedDB with explicit staleness tracking.
         globPatterns: ["**/*.{js,css,html,svg,png,woff2}"],
-        navigateFallback: "/index.html",
+        navigateFallback: `${base}index.html`,
         navigateFallbackDenylist: [/^\/auth\//, /^\/rest\//],
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
       },

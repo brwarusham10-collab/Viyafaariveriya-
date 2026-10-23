@@ -17,3 +17,8 @@ export function initials(name: string | null | undefined): string {
     .map((p) => p[0]!.toUpperCase())
     .join("");
 }
+
+/** Absolute URL of an app route, respecting the deploy base path (e.g. GitHub Pages sub-path). */
+export function appUrl(path: string): string {
+  return `${window.location.origin}${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
+}
